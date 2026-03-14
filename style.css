@@ -1,0 +1,510 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    background-color: #fff; /* Background for the main invitation */
+}
+
+#splash-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1.2s ease-in-out, visibility 1.2s;
+}
+
+/* The class that hides the splash page */
+#splash-page.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.invited-header {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 3.5rem;
+    color: #f3ee97;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.envelope-wrapper {
+    position: relative;
+    width: 380px; 
+    height: 280px;
+    perspective: 1500px;
+    cursor: pointer;
+}
+
+.envelope-base {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2; 
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    z-index: 10; 
+    transform-origin: top;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.envelope-base img, .envelope-flap img {
+    width: 100%;
+    display: block;
+}
+
+.open-text {
+    position: absolute;
+    bottom: 47px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #aa8844;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    z-index: 20; 
+    transition: opacity 0.3s;
+}
+
+/* OPENED STATE: Applied via JS */
+.is-open .envelope-flap {
+    transform: rotateX(155deg);
+}
+
+.is-open .open-text {
+    opacity: 0;
+}
+
+/* ... Keep your Reset and Splash-page code the same ... */
+
+#main-invitation {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    background: #fff;
+    /* REMOVED GAP: ensures images touch like a single letter */
+}
+
+.invitation-container {
+    position: relative;
+    max-width: 500px; 
+    width: 100%;
+    line-height: 0; /* REMOVED SEPARATION: kills the tiny white gap between images */
+}
+
+.invitation-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Removed box-shadow here to make the transition between pages invisible */
+}
+
+.image-overlay {
+    position: absolute;
+    top: 49%; /* Your manual tweak preserved */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    line-height: normal; /* Resets the line-height for the text */
+}
+
+.occasion {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #977736;
+    letter-spacing: 8px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.name {
+    /* RESTORED FONT: Back to the elegant script */
+    font-family: 'Pinyon Script', cursive;
+    font-size: 3rem;
+    color: #333;
+    margin-top: -10px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+/* ... Keep all your previous CSS the same ... */
+
+.letter-content {
+    position: absolute;
+    top: 17%; /* TWEAK THIS: Change to move the text up or down on 2.png */
+    left: 54%; /* TWEAK THIS: Change to move the text left or right */
+    transform: translate(-50%, -50%);
+    width: 77%; /* Adjusts the width of the paragraph text */
+    text-align: center;
+}
+
+.invite-text {
+    font-family: 'Playfair Display', serif; /* Keeps it professional and elegant */
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    border-bottom: 1px;
+    color: #aa8844;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 1px rgb(253, 253, 253);
+}
+
+.bottom-countdown-wrapper {
+    position: absolute;
+    
+    /* --- MANUAL MOVEMENT --- */
+    bottom: 40px;  /* Increase this (e.g., 100px) to move it UP */
+                   /* Decrease this (e.g., 20px) to move it DOWN */
+    
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    line-height: normal;
+}
+
+.save-the-date-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+    
+    /* COLOR CHANGE: Change this hex code to any color you like */
+    color: #aa8844; 
+    
+    text-align: center;
+    display: block;
+    width: 100%;
+    
+    /* MANUAL MOVEMENT: Increase/Decrease these to nudge it */
+    margin-top: 0px;    /* Use a positive number to move it DOWN */
+    margin-bottom: 15px; /* Space between this and the MAY 26 row */
+}
+
+/* NEW: Date Built from Scratch Styles */
+/* Centers the whole block and lets you move it manually */
+.date-section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    top: 0px; /* NUDGE THIS to move the whole group up or down */
+}
+
+.date-horizontal-row {
+    display: flex;
+    flex-direction: row; /* This is the key change! */
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* The divider lines */
+.vertical-line {
+    width: 1px;
+    height: 50px; /* Adjust height to match your '26' */
+    background-color: #aa8844; /* Your gold color */
+}
+
+.date-center-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.side-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: #493d34;
+}
+
+.month-name-top {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    color: #493d34;
+    margin-bottom: 9px;
+}
+
+.day-number {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 3.5rem;
+    color: #aa8844;
+    margin-top: -5px;
+}
+
+/* NEW: Larger, Coded Boxed Timer */
+#countdown-boxed {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.time-box-styled {
+    border: 1.5px solid #aa8844;
+    border-radius: 12px;
+    background-color: #fcf9f2;
+    padding: 12px 5px;
+    /* LARGER MIN-WIDTH: Solves the squished problem */
+    min-width: 85px; 
+    text-align: center;
+}
+
+.time-box-styled span {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.1rem; /* Slightly larger numbers to fill the boxes */
+    color: #aa8844;
+    font-weight: bold;
+    line-height: 1.1;
+}
+
+.time-box-styled p {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: #888;
+}
+
+/* Styling for the 3rd page content */
+/* COMBINED PAGE 3 STYLING */
+.invitation-container {
+    position: relative; /* This is the anchor for everything inside */
+    line-height: 0;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.page-3-content {
+    position: absolute;
+    top: 0;  /* We set this to 0 because the Map and Text will use their own positioning */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* This ensures you can still scroll the page */
+}
+
+.map-wrapper {
+    position: absolute !important;
+    display: block !important;
+    
+    /* MANUALLY ADJUST THESE TWO NUMBERS TO MOVE THE MAP */
+    top: 13% !important;   /* Increase to move DOWN, Decrease to move UP */
+    left: 50% !important;  
+    
+    transform: translate(-50%, -50%) !important;
+    
+    width: 75%; 
+    height: 180px;
+    border: 2px solid #aa8844;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 999; /* Makes sure it stays on top of the image */
+    pointer-events: auto; /* Re-enables clicking the map */
+}
+
+/* This ensures the label ONLY appears on Page 3 */
+.page-3-content .venue-label {
+    position: absolute !important;
+    top: 28%;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    
+    /* Your styling */
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: #aa8844;
+    text-shadow: 1px 1px 2px rgba(249, 249, 248, 0.8);
+    letter-spacing: 3px;
+    font-weight: bold;
+    width: 80%;
+    text-align: center;
+    z-index: 1000;
+    display: block;
+}
+
+.dress-code-wrapper {
+    margin-top: 170px; /* Space between venue name and dress code */
+}
+
+.dress-code {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #aa8844;
+    letter-spacing: 2px;
+    text-transform: uppercase; /* Makes it look like a formal instruction */
+    font-weight: bold;
+}
+
+/* Styling for the 4th page content */
+.page-4-content {
+    position: absolute;
+    top: 50%; /* TWEAK THIS: Change to move content up or down on 4.png */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    text-align: center;
+    line-height: 1.6; /* Keeps text clear and separated */
+}
+
+/* Ensure images don't have gaps */
+.invitation-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.page-4-content {
+    position: absolute;
+    top: 26%; /* MANUALLY TWEAK: Move this up to make room for Candles/Bills */
+    left: 24%;
+    transform: translate(-50%, -50%);
+    width: 51%;
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: #aa8844;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #aa8844;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.names-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    
+    /* 1. SMALLER WIDTH: This is the main way to pull columns inward */
+    width: 53%; 
+    margin: 10px auto 0 auto; /* 'auto' centers the smaller grid */
+    
+    /* 2. GAP: The second number (2px) is the horizontal space between columns */
+    gap: 8px 2px; 
+}
+
+.names-grid span {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem; 
+    color: #444;
+    line-height: 1.2;
+    
+    /* 3. ALIGNMENT: Keeping text centered within its narrow column */
+    text-align: center; 
+}
+
+/* Page 5 Styling */
+.page-5-content {
+    position: absolute;
+    top: 60%; /* Adjust this to move the text/button up or down on 5.png */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This centers everything horizontally */
+    justify-content: center;
+    text-align: center;
+}
+
+
+.rsvp-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+.rsvp-button {
+    display: inline-block;
+    padding: 12px 20px; /* Reduced side padding slightly */
+    
+    /* NEW: This allows the text to wrap */
+    white-space: normal; 
+    max-width: 150px;    /* Limits the width to force the 'ATTENDANCE' to the next line */
+    line-height: 1.2;    /* Keeps the two lines close together */
+    
+    background-color: #aa8844;
+    color: #fcf9f2;
+    border: 1.5px solid #aa8844;
+    border-radius: 20px; /* Adjusted radius for a balanced look */
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* Hover Effect */
+.rsvp-button:hover {
+    background-color: #fcf9f2;
+    color: #aa8844;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(170, 136, 68, 0.2);
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media screen and (max-width: 480px) {
+    
+    /* 1. Fix the Countdown Boxes */
+    .time-box-styled {
+        min-width: 65px; /* Shorter boxes for narrow screens */
+        padding: 8px 2px;
+    }
+    
+    .time-box-styled span {
+        font-size: 1.5rem; /* Smaller numbers */
+    }
+
+    /* 2. Fix the 18 Tulips Grid */
+    .names-grid {
+        grid-template-columns: repeat(2, 1fr); /* Switch to 2 columns so names aren't squished */
+        width: 90%;
+        gap: 5px;
+    }
+
+    .names-grid span {
+        font-size: 0.65rem; /* Slightly smaller text */
+    }
+
+    /* 3. Adjust General Text Size */
+    .invite-text, .rsvp-text {
+        font-size: 0.85rem;
+        width: 90%;
+    }
+
+    .venue-label, .dress-code {
+        font-size: 0.8rem;
+    }
+}
